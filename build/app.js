@@ -12,9 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.App = void 0;
+exports.whatsapp = exports.App = void 0;
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
+const whatsapp_1 = __importDefault(require("./utils/whatsapp"));
+const routes_1 = require("./routes");
 class App {
     constructor(port) {
         this.app = (0, express_1.default)();
@@ -31,7 +33,9 @@ class App {
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: true }));
     }
-    routes() { }
+    routes() {
+        this.app.use("/api/whatsapp", routes_1.whatsappRoutes);
+    }
     listen() {
         return __awaiter(this, void 0, void 0, function* () {
             this.app.listen(this.app.get("port"));
@@ -40,3 +44,4 @@ class App {
     }
 }
 exports.App = App;
+exports.whatsapp = whatsapp_1.default;
